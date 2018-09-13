@@ -2,11 +2,11 @@ package com.fragmentnavigation.gabor.fragmentnavigationsample.navigation;
 
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
+
 import java.lang.reflect.Type;
 
 
 public class NavigationFacade<T extends BaseActivity> extends BaseNavigationFacade<T> {
-
 
     NavigationFacade(T activity, BaseNavigationStrategy<T> navigationStrategy) {
         this.fragmentNavigationStrategy = navigationStrategy;
@@ -23,8 +23,18 @@ public class NavigationFacade<T extends BaseActivity> extends BaseNavigationFaca
     }
 
     @Override
+    public boolean navigateTo(Type fragmentClass, int requestCode) {
+        return fragmentNavigationStrategy != null && fragmentNavigationStrategy.navigateTo(activity, fragmentClass, null, requestCode);
+    }
+
+    @Override
     public boolean navigateTo(Type fragmentClass, Bundle bundle) {
         return fragmentNavigationStrategy != null && fragmentNavigationStrategy.navigateTo(activity, fragmentClass, bundle, 0, 0);
+    }
+
+    @Override
+    public boolean navigateTo(Type fragmentClass, Bundle bundle, int requestCode) {
+        return fragmentNavigationStrategy != null && fragmentNavigationStrategy.navigateTo(activity, fragmentClass, bundle, requestCode);
     }
 
     @Override

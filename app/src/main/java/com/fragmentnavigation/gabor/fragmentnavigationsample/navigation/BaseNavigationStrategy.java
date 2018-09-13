@@ -10,18 +10,19 @@ import java.lang.reflect.Type;
  * Base navigation strategy
  */
 
-public abstract class BaseNavigationStrategy<T extends BaseActivity> {
+abstract class BaseNavigationStrategy<T extends BaseActivity> {
     private static final String TAG = StandardNavigationStrategy.class.getSimpleName();
 
+    BaseFragment sourceFragment;
     BaseFragment currentFragment;
     int fragmentContainerId;
-
+    boolean isRequestCode;
 
     BaseNavigationStrategy(int fragmentContainerId) {
         this.fragmentContainerId = fragmentContainerId;
     }
 
-    protected BaseFragment getBaseFragmentFromType(Type fragmentClass) {
+    private BaseFragment getBaseFragmentFromType(Type fragmentClass) {
         BaseFragment baseFragment = null;
         if (fragmentClass instanceof BaseFragment) {
             baseFragment = (BaseFragment) fragmentClass;
@@ -36,28 +37,36 @@ public abstract class BaseNavigationStrategy<T extends BaseActivity> {
         return baseFragment;
     }
 
-    protected boolean isSameFragment(BaseFragment currentFragment, BaseFragment targetFragment) {
+    private boolean isSameFragment(BaseFragment currentFragment, BaseFragment targetFragment) {
         return targetFragment.getClass().isInstance(currentFragment);
     }
 
     boolean navigateTo(T context, Type fragmentClass, Object param, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
-        return navigationExecutor(context, fragmentClass, null, param, enterAnimId, exitAnimId);
+        return navigationExecutor(context, fragmentClass, null, param, 0, enterAnimId, exitAnimId);
     }
 
     boolean navigateTo(T context, Type fragmentClass, Bundle bundle, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
-        return navigationExecutor(context, fragmentClass, bundle, null, enterAnimId, exitAnimId);
+        return navigationExecutor(context, fragmentClass, bundle, null, 0, enterAnimId, exitAnimId);
     }
 
-    protected boolean navigationExecutor(T context, Type fragmentClass, Bundle bundle, Object param, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
-        currentFragment = (BaseFragment) context.getSupportFragmentManager().findFragmentById(fragmentContainerId);
+    boolean navigateTo(T context, Type fragmentClass, Bundle bundle, int requestCode) {
+        isRequestCode = true;
+
+        return navigationExecutor(context, fragmentClass, bundle, null, requestCode, 0, 0);
+    }
+
+    private boolean navigationExecutor(T context, Type fragmentClass, Bundle bundle, Object param, int requestCode, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
+        sourceFragment = (BaseFragment) context.getSupportFragmentManager().findFragmentById(fragmentContainerId);
+        currentFragment = sourceFragment;
+
         BaseFragment targetFragment = getBaseFragmentFromType(fragmentClass);
 
         if (targetFragment != null && !isSameFragment(currentFragment, targetFragment)) {
-            transaction(context, bundle, param, targetFragment, enterAnimId, exitAnimId);
+            transaction(context, bundle, param, targetFragment, requestCode, enterAnimId, exitAnimId);
             return true;
         }
         return false;
     }
 
-    abstract void transaction(T context, Bundle bundle, Object mParam, BaseFragment baseFragmentClass, int enterAnimId, int exitAnimId);
+    abstract void transaction(T context, Bundle bundle, Object mParam, BaseFragment baseFragmentClass, int requestCode, int enterAnimId, int exitAnimId);
 }

@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 
-public class StandardNavigationStrategy<T extends BaseActivity> extends BaseNavigationStrategy<T> {
+class StandardNavigationStrategy<T extends BaseActivity> extends BaseNavigationStrategy<T> {
 
-
-    public StandardNavigationStrategy(int fragmentContainerID) {
+    StandardNavigationStrategy(int fragmentContainerID) {
         super(fragmentContainerID);
     }
 
     @Override
-    void transaction(T context, Bundle bundle, Object mParam, BaseFragment baseFragmentClass, int enterAnimId, int exitAnimId) {
+    void transaction(T context, Bundle bundle, Object mParam, BaseFragment baseFragmentClass, int requestCode, int enterAnimId, int exitAnimId) {
         currentFragment = baseFragmentClass;
 
         if (mParam != null) {
@@ -24,6 +23,10 @@ public class StandardNavigationStrategy<T extends BaseActivity> extends BaseNavi
             currentFragment.setArguments(bundle);
         }
 
+        if (isRequestCode) {
+            currentFragment.setTargetFragment(sourceFragment, requestCode);
+        }
+
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
 
         if (enterAnimId > 0 && exitAnimId > 0) {
@@ -31,6 +34,7 @@ public class StandardNavigationStrategy<T extends BaseActivity> extends BaseNavi
         }
 
         transaction.replace(fragmentContainerId, currentFragment);
-        transaction.commitAllowingStateLoss();
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

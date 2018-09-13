@@ -2,6 +2,7 @@ package com.fragmentnavigation.gabor.fragmentnavigationsample.navigation;
 
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
+
 import java.lang.reflect.Type;
 
 /**
@@ -17,7 +18,17 @@ public class EmptyNavigationFacade<T extends BaseActivity> extends BaseNavigatio
     }
 
     @Override
+    public boolean navigateTo(Type fragmentClass, int requestCode) {
+        return false;
+    }
+
+    @Override
     public boolean navigateTo(Type fragmentClass, Bundle bundle) {
+        return false;
+    }
+
+    @Override
+    public boolean navigateTo(Type fragmentClass, Bundle bundle, int requestCode) {
         return false;
     }
 

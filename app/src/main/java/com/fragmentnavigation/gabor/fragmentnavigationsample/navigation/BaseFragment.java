@@ -1,6 +1,6 @@
 package com.fragmentnavigation.gabor.fragmentnavigationsample.navigation;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
@@ -10,13 +10,13 @@ import java.lang.reflect.Type;
 public abstract class BaseFragment extends Fragment implements Type, Interfaces.OnBackPressed {
 
     protected Interfaces.OnCloseDrawer drawerInterface;
-    protected Activity context;
+    protected Context context;
     protected Object customParameter;
 
     private BaseNavigationFacade navigationFacade;
 
     @Override
-    public void onAttach(Activity context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
 
         if (context instanceof Interfaces.OnCloseDrawer) {

@@ -25,10 +25,29 @@ public abstract class BaseNavigationFacade<T extends BaseActivity> {
      * With this method you can navigate to other Fragment
      *
      * @param fragmentClass - your fragment instance or Class to navigate
+     * @param requestCode   - request code to send back when fragment closes
+     * @return true if the navigation was success.
+     **/
+    public abstract boolean navigateTo(Type fragmentClass, int requestCode);
+
+    /**
+     * With this method you can navigate to other Fragment
+     *
+     * @param fragmentClass - your fragment instance or Class to navigate
      * @param bundle        - bundle to send to the fragment
      * @return true if the navigation was success.
      **/
     public abstract boolean navigateTo(Type fragmentClass, Bundle bundle);
+
+    /**
+     * With this method you can navigate to other Fragment
+     *
+     * @param fragmentClass - your fragment instance or Class to navigate
+     * @param bundle        - bundle to send to the fragment
+     * @param requestCode   - request code to send back when fragment closes
+     * @return true if the navigation was success.
+     **/
+    public abstract boolean navigateTo(Type fragmentClass, Bundle bundle, int requestCode);
 
     /**
      * With this method you can navigate to other Fragment
