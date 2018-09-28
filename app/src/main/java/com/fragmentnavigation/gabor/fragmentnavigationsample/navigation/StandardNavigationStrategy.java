@@ -34,7 +34,6 @@ class StandardNavigationStrategy<T extends BaseActivity> extends BaseNavigationS
         }
 
         transaction.replace(fragmentContainerId, currentFragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
