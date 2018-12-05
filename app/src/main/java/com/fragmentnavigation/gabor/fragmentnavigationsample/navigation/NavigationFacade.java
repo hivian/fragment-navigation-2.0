@@ -38,6 +38,11 @@ public class NavigationFacade<T extends BaseActivity> extends BaseNavigationFaca
     }
 
     @Override
+    public boolean navigateTo(Type fragmentClass, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
+        return fragmentNavigationStrategy != null && fragmentNavigationStrategy.navigateTo(activity, fragmentClass, enterAnimId, exitAnimId);
+    }
+
+    @Override
     public boolean navigateTo(Type fragmentClass, Bundle bundle, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
         return fragmentNavigationStrategy != null && fragmentNavigationStrategy.navigateTo(activity, fragmentClass, bundle, enterAnimId, exitAnimId);
     }

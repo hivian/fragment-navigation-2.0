@@ -45,6 +45,10 @@ abstract class BaseNavigationStrategy<T extends BaseActivity> {
         return navigationExecutor(context, fragmentClass, null, param, 0, enterAnimId, exitAnimId);
     }
 
+    boolean navigateTo(T context, Type fragmentClass, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
+        return navigationExecutor(context, fragmentClass, null, null, 0, enterAnimId, exitAnimId);
+    }
+
     boolean navigateTo(T context, Type fragmentClass, Bundle bundle, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
         return navigationExecutor(context, fragmentClass, bundle, null, 0, enterAnimId, exitAnimId);
     }

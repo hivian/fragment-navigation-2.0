@@ -53,6 +53,16 @@ public abstract class BaseNavigationFacade<T extends BaseActivity> {
      * With this method you can navigate to other Fragment
      *
      * @param fragmentClass - your fragment instance or Class to navigate
+     * @param enterAnimId   - your fragment`s enter animation
+     * @param exitAnimId    - previous fragment`s exit animation
+     * @return true if the navigation was success.
+     **/
+    public abstract boolean navigateTo(Type fragmentClass, @AnimRes int enterAnimId, @AnimRes int exitAnimId);
+
+    /**
+     * With this method you can navigate to other Fragment
+     *
+     * @param fragmentClass - your fragment instance or Class to navigate
      * @param bundle        - bundle to send to the fragment
      * @param enterAnimId   - your fragment`s enter animation
      * @param exitAnimId    - previous fragment`s exit animation

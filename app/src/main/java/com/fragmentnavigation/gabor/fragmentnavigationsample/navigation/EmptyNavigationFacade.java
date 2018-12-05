@@ -33,6 +33,11 @@ public class EmptyNavigationFacade<T extends BaseActivity> extends BaseNavigatio
     }
 
     @Override
+    public boolean navigateTo(Type fragmentClass, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
+        return false;
+    }
+
+    @Override
     public boolean navigateTo(Type fragmentClass, Bundle bundle, @AnimRes int enterAnimId, @AnimRes int exitAnimId) {
         return false;
     }
